@@ -7,4 +7,6 @@
   window.__env.version = "0.0.1";
   // enable thesaurus import in thesaurus list for admins
   window.__env.thesImportEnabled = true;
+  // this is for local development with MUFI
+  window.__env.mufiUrl = "http://localhost:5184/api/";
 })(this);

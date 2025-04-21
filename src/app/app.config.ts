@@ -37,6 +37,7 @@ import { routes } from './app.routes';
 import { PART_EDITOR_KEYS } from './part-editor-keys';
 import { INDEX_LOOKUP_DEFINITIONS } from './index-lookup-definitions';
 import { ITEM_BROWSER_KEYS } from './item-browser-keys';
+import { WHG_USERNAME_TOKEN } from '@myrmidon/cadmus-refs-whg-lookup';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -117,6 +118,15 @@ export const appConfig: ApplicationConfig = {
         2083: 'txt.emoji', // Ctrl+E
         2090: 'md.link', // Ctrl+L
       },
+    },
+    // GeoNames lookup (see environment.prod.ts for the username)
+    {
+      provide: GEONAMES_USERNAME_TOKEN,
+      useValue: 'myrmex',
+    },
+    {
+      provide: WHG_USERNAME_TOKEN,
+      useValue: 'myrmex',
     },
   ],
 };
