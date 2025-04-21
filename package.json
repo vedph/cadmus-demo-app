@@ -97,7 +97,6 @@
     "@myrmidon/ngx-tools": "^1.0.3",
     "@myrmidon/paged-data-browsers": "^4.0.2",
     "diff-match-patch": "^1.0.5",
-    "i": "^0.3.7",
     "leaflet": "^1.9.4",
     "marked": "^15.0.8",
     "monaco-editor": "^0.52.2",
