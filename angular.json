@@ -31,7 +31,12 @@
             ],
             "styles": ["src/styles.scss"],
             "scripts": [],
-            "allowedCommonJsDependencies": ["diff-match-patch", "leaflet"]
+            "allowedCommonJsDependencies": [
+              "dagre",
+              "diff-match-patch",
+              "leaflet",
+              "webcola"
+            ]
           },
           "configurations": {
             "production": {
