@@ -49,7 +49,7 @@ services:
       - cadmus-demo-network
 
   # Cadmus demo App
-  cadmus-app:
+  cadmus-demo-app:
     image: vedph2020/cadmus-demo-app:0.0.1
     container_name: cadmus-demo-app
     ports:
