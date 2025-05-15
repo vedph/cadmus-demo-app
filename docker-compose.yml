@@ -1,21 +1,21 @@
 services:
   # MongoDB
-  cadmus-mongo:
+  cadmus-demo-mongo:
     image: mongo
-    container_name: cadmus-mongo
+    container_name: cadmus-demo-mongo
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
-    command: mongod --logpath=/dev/null # --quiet
+    command: mongod --logpath=/dev/null
     ports:
       - 27017:27017
     networks:
-      - cadmus-network
+      - cadmus-demo-network
 
-  # PostgreSQL
-  cadmus-pgsql:
+ # PostgreSQL
+  cadmus-demo-pgsql:
     image: postgres
-    container_name: cadmus-pgsql
+    container_name: cadmus-demo-pgsql
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -23,53 +23,42 @@ services:
     ports:
       - 5432:5432
     networks:
-      - cadmus-network
-    # volumes:
-      # ensure you have created the var/db/pgsql folder in the host
-      # https://hub.docker.com/r/postgis/postgis
-      # - /var/db/pgsql:/var/lib/postgresql/data
+      - cadmus-demo-network
 
-  # Cadmus API
-  cadmus-api:
-    image: vedph2020/cadmus-api:9.0.3
-    container_name: cadmus-api
+  # Cadmus demo API
+  cadmus-demo-api:
+    image: vedph2020/cadmus-demo-api:0.0.1
+    container_name: cadmus-demo-api
     ports:
-      - 60380:8080
+      - 5184:8080
     depends_on:
-      - cadmus-mongo
-      - cadmus-pgsql
+      - cadmus-demo-mongo
+      - cadmus-demo-pgsql
     environment:
-      # for Windows use : as separator, for non Windows use __
-      # (see https://github.com/aspnet/Configuration/issues/469)
       - ASPNETCORE_URLS=http://+:8080
-      - CONNECTIONSTRINGS__DEFAULT=mongodb://cadmus-mongo:27017/{0}
-      - CONNECTIONSTRINGS__AUTH=Server=cadmus-pgsql;port=5432;Database={0};User Id=postgres;Password=postgres;Include Error Detail=True
-      - CONNECTIONSTRINGS__INDEX=Server=cadmus-pgsql;port=5432;Database={0};User Id=postgres;Password=postgres;Include Error Detail=True
+      - CONNECTIONSTRINGS__DEFAULT=mongodb://cadmus-demo-mongo:27017/{0}
+      - CONNECTIONSTRINGS__AUTH=Server=cadmus-demo-pgsql;port=5432;Database={0};User Id=postgres;Password=postgres;Include Error Detail=True
+      - CONNECTIONSTRINGS__INDEX=Server=cadmus-demo-pgsql;port=5432;Database={0};User Id=postgres;Password=postgres;Include Error Detail=True
+      - SERILOG__CONNECTIONSTRING=mongodb://cadmus-demo-mongo:27017/{0}-log
+      - STOCKUSERS__0__PASSWORD=P4ss-W0rd!
       - SEED__DELAY=20
       - MESSAGING__APIROOTURL=http://cadmusapi.azurewebsites.net
       - MESSAGING__APPROOTURL=http://cadmusapi.com/
       - MESSAGING__SUPPORTEMAIL=support@cadmus.com
-      - SENDGRID__ISENABLED=true
-      - SENDGRID__SENDEREMAIL=info@cadmus.com
-      - SENDGRID__SENDERNAME=cadmus
-      - SENDGRID__APIKEY=todo
-      - SERILOG__CONNECTIONSTRING=mongodb://cadmus-mongo:27017/cadmus-logs
-      - STOCKUSERS__0__PASSWORD=P4ss-W0rd!
-      - AUDITING__POSTGRES=false
     networks:
-      - cadmus-network
+      - cadmus-demo-network
 
-  # Cadmus App
+  # Cadmus demo App
   cadmus-app:
-    image: vedph2020/cadmus-shell:8.0.2
-    container_name: cadmus-app
+    image: vedph2020/cadmus-demo-app:0.0.1
+    container_name: cadmus-demo-app
     ports:
       - 4200:80
     depends_on:
-      - cadmus-api
+      - cadmus-demo-api
     networks:
-      - cadmus-network
+      - cadmus-demo-network
 
 networks:
-  cadmus-network:
+  cadmus-demo-network:
     driver: bridge
