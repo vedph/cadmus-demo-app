@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Thesaurus, ThesaurusEntry } from '@myrmidon/cadmus-core';
 import { Router, RouterModule } from '@angular/router';
@@ -17,8 +16,10 @@ import { EnvService, RamStorageService } from '@myrmidon/ngx-tools';
 import { AuthJwtService, GravatarPipe, User } from '@myrmidon/auth-jwt-login';
 
 // bricks
-import { ASSERTED_COMPOSITE_ID_CONFIGS_KEY } from '@myrmidon/cadmus-refs-asserted-ids';
-import { RefLookupConfig } from '@myrmidon/cadmus-refs-lookup';
+import {
+  LOOKUP_CONFIGS_KEY,
+  RefLookupConfig,
+} from '@myrmidon/cadmus-refs-lookup';
 import { ViafRefLookupService } from '@myrmidon/cadmus-refs-viaf-lookup';
 import { GeoNamesRefLookupService } from '@myrmidon/cadmus-refs-geonames-lookup';
 import { DbpediaRefLookupService } from '@myrmidon/cadmus-refs-dbpedia-lookup';
@@ -33,7 +34,6 @@ import { AppRepository } from '@myrmidon/cadmus-state';
 @Component({
   selector: 'app-root',
   imports: [
-    CommonModule,
     RouterModule,
     MatButtonModule,
     MatIconModule,
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.version = env.get('version') || '';
 
     // configure external lookup for asserted composite IDs
-    storage.store(ASSERTED_COMPOSITE_ID_CONFIGS_KEY, [
+    storage.store(LOOKUP_CONFIGS_KEY, [
       {
         name: 'VIAF',
         iconUrl: '/img/viaf128.png',

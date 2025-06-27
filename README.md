@@ -32,9 +32,15 @@ Whenever you want to stop playing, just stop the containers by breaking out of t
 🐋 Quick Docker image build:
 
 1. update version in `env.js` and `ng build --configuration=production`
-2. `docker build . -t vedph2020/cadmus-demo-app:0.0.2 -t vedph2020/cadmus-demo-app:latest` (replace with the current version).
+2. `docker build . -t vedph2020/cadmus-demo-app:0.0.3 -t vedph2020/cadmus-demo-app:latest` (replace with the current version).
 
 ## History
+
+### 0.0.3
+
+- 2025-06-27:
+  - updated Angular and packages.
+  - added stats page.
 
 ### 0.0.2
 
